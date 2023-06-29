@@ -51,7 +51,6 @@ export default class SessionRouter extends BaseRouter {
                 }
             ),
             (req, res) => {
-                console.log("hello current");
                 res.sendSuccessWithPayload(req.user);
             })
 
