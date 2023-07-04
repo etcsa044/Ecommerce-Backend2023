@@ -1,4 +1,4 @@
-import JwtService from "../services/jwt.service.js";
+import { JwtService } from "../utils/utils.js";
 import { passportCall } from "../services/passportcall.service.js";
 import BaseRouter from "./Router.js";
 

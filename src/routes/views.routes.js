@@ -1,12 +1,19 @@
-
-import JwtService from "../services/jwt.service.js";
 import BaseRouter from "./Router.js";
-
-const jwtService = new JwtService()
 
 export default class ViewsRouter extends BaseRouter {
 
     init() {
+
+        this.get(
+            "/",
+            ["PUBLIC"],
+            (req, res) => {
+                let user = req.user
+                console.log(user);
+                res.render("index", user);
+            }
+        )
+
         this.get(
             "/login",
             ["NO_AUTH"],

@@ -1,8 +1,7 @@
+import passport from "passport";
 import { Strategy, ExtractJwt } from "passport-jwt";
 import local from "passport-local";
-import passport from "passport";
-
-import Hasher from "../services/bcrypt.service.js";
+import { Hasher } from "../utils/utils.js";
 import { usersService } from "../../dao/mongo/managers/index.js";
 import { cookieExtractor } from "../utils/utils.js";
 
@@ -33,7 +32,7 @@ const initializePassportStrategies = () => {
 
             const result = usersService.createUser(user);
 
-            done(null, result, { message: "Usuario creado correctamente." });
+            return done(null, result, { message: "Usuario creado correctamente." });
 
         } catch (error) {
             return done(error)
@@ -94,13 +93,13 @@ const initializePassportStrategies = () => {
         }
     })) //fin JWT.
 
-    passport.serializeUser(function (user, done) {
-        return done(null, user.id);
-    })
-    passport.deserializeUser(async function (id, done) {
-        const user = await usersService.findOne({ _id: id })
-        return done(null, user)
-    });
+    // passport.serializeUser(function (user, done) {
+    //     return done(null, user.id);
+    // })
+    // passport.deserializeUser(async function (id, done) {
+    //     const user = await usersService.findOne({ _id: id })
+    //     return done(null, user)
+    // });
 }
 
 export default initializePassportStrategies;

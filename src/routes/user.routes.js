@@ -1,13 +1,12 @@
 import { Router } from "express";
-
 import UserManager from "../../dao/mongo/managers/users.manager.js";
 import passport from "passport";
-import JwtHandler from "../services/jwt.service.js";
+import { JwtService } from "../utils/utils.js";
 
 
 const router = Router();
 const userManager = new UserManager();
-const jwt = new JwtHandler();
+const jwt = new JwtService();
 
 //GetUsers:
 router.get("/", async (req, res) => {
