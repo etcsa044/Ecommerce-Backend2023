@@ -37,7 +37,8 @@ const schema = new mongoose.Schema({
     },
     status:{
         type: Boolean,
-        required:true   
+        required:true,
+        default: true   
     },
 },{timestamps:{createdAt:`created_at`, updatedAt:`updated_at`}})
 

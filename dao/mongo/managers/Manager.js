@@ -7,10 +7,13 @@ export default class BaseManager {
 
     get = () => this.model.find().lean();
 
-    getById = (id) =>  this.model.findBy(id) ;
+    getById = id => this.model.findById(id);
+
+    getBy = param => this.model.find(param).lean();
     
-    getBy = (param) => { this.model.findOne(param) };
-    create = (object) => { this.model.create(object) };
-    update = (param, object) => { this.model.findOneAndUpdate({param},{object} )};
-    delete = (param) => { this.model.findOneAndDelete({param})};
+    create = (object) => this.model.create(object);
+
+    update = (id, object) => this.model.findByIdAndUpdate({ _id:id }, object );
+
+    delete = (param) => this.model.findByIdAndDelete(param);
 };

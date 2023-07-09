@@ -39,11 +39,18 @@ export default class BaseRouter {
         res.sendSuccess = message => res.send({ status: "success", message });
         res.sendSuccessWithPayload = payload => res.send({ status: "success", payload });
         res.sendInternalError = error => res.status(500).send({ status: "error", error:error.toString() });
+        res.sendIncompletesValues = error => res.status(400).send({ status: "error", message: "The fields are all required", error:error});
+        res.sendNotFound = error => res.status(400).send({ status: "error", message: "No Results - Please verify the entered data."
+
+
+
+
+        , error:error});
         res.sendUnauthorized = error => res.status(400).send({ status: "error", error });
         next();
     }
 
-    // Manejo de Politicas:
+    // Handle Policies:
 
     handlePolicies = policies => {
         return (req, res, next) => {

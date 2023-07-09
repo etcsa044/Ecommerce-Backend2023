@@ -1,7 +1,7 @@
 import BaseRouter from "./Router.js";
 import ProductController from "../controllers/product.controller.js";
 
-const productService = new ProductController()
+const productController = new ProductController()
 
 export default class ProductRouter extends BaseRouter {
 
@@ -10,8 +10,39 @@ export default class ProductRouter extends BaseRouter {
         this.get(
             "/",
             ["PUBLIC"],
-            productService.getObjects
+            productController.getObjects
         )
+
+        this.get(
+            "/:id",
+            ["PUBLIC"],
+            productController.getObjectById
+        )
+
+        this.get(
+            "/:attribute/:value",
+            ["PUBLIC"],
+            productController.getObjectBy
+        )
+
+        this.post(
+            "/",
+            ["PUBLIC"], // CORRESPONDE "ADMIN";
+            productController.createProduct
+        )
+
+        this.put(
+            "/:id",
+            ["PUBLIC"],
+           productController.updateObject
+        )
+
+        this.delete(
+            "/:id",
+            ["PUBLIC"],
+            productController.deleteObject
+        )
+
     }
 
 

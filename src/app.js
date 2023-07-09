@@ -19,7 +19,6 @@ const PORT = process.env.PORT || 8080;
 const server = app.listen(PORT, () => { console.log(`listening on PORT ${PORT}`) });
 
 // Instancias Router:
-console.log("0");
 const productRouter = new ProductRouter();
 const sessionRouter = new SessionRouter();
 const viewsRouter = new ViewsRouter();
