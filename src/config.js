@@ -2,10 +2,10 @@ import dotenv from 'dotenv';
 import { Command } from 'commander';
 
 const program = new Command();
-program.option('-m, --mode <mode>', 'execution mode', "dev")
+program.option('-m, --mode <mode>', 'execution mode', "prod")
 program.parse();
 dotenv.config({
-    path: program.opts().mode === "dev"?'./.env.dev':'./env.prod'
+    path: program.opts().mode === "dev"?'./.env.dev':'./.env.prod'
 });
 
 export default {
