@@ -6,12 +6,12 @@ const manager = productService;
 
 
 export default class ProductController extends BaseController {
-    
-        constructor(){
-            super(manager)
-        }
 
-        //create
+    constructor() {
+        super(manager)
+    }
+
+    //create
     createProduct = async (req, res) => {
 
         const products = await this.manager.get()
@@ -32,8 +32,8 @@ export default class ProductController extends BaseController {
         //"duplicated code" validation:
         let exist = products.some(e => e.code === code);
 
-        if (exist) return res.status(400).send({status:"error", message: "The entered code already exists"})
-        
+        if (exist) return res.status(400).send({ status: "error", message: "The entered code already exists" })
+
         const productToAdd = {
             title,
             description,

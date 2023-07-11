@@ -36,6 +36,7 @@ export default class BaseController {
         query[attribute] = value;
         try {
             const result = await this.manager.getBy(query);
+            if(result.length === 0) return res.sendSuccess("Sorry, there are no carts with those specifications.")
             res.sendSuccessWithPayload(result);
         } catch (error) {
             res.sendInternalError(error);

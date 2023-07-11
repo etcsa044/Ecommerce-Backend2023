@@ -4,6 +4,7 @@ import local from "passport-local";
 import { Hasher } from "../utils/utils.js";
 import { usersService } from "../../dao/mongo/managers/index.js";
 import { cookieExtractor } from "../utils/utils.js";
+import config from "../config.js";
 
 const LocalStrategy = local.Strategy;
 const JWTStrategy = Strategy;
@@ -46,7 +47,7 @@ const initializePassportStrategies = () => {
         let user;
 
         try {
-            if (email === "adminCoder@coder.com" && password === "coder123") {
+            if (email === config.admin.user && password === config.admin.password) {
                 const user = {
                     id: 0,
                     name: `SuperAdmin`,

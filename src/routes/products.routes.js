@@ -27,19 +27,19 @@ export default class ProductRouter extends BaseRouter {
 
         this.post(
             "/",
-            ["PUBLIC"], // CORRESPONDE "ADMIN";
+            ["ADMIN"],
             productController.createProduct
         )
 
         this.put(
             "/:id",
-            ["PUBLIC"],
+            ["ADMIN"],
            productController.updateObject
         )
 
         this.delete(
             "/:id",
-            ["PUBLIC"],
+            ["ADMIN"],
             productController.deleteObject
         )
 
