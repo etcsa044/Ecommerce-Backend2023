@@ -2,7 +2,7 @@ import passport from "passport";
 import { Strategy, ExtractJwt } from "passport-jwt";
 import local from "passport-local";
 import { Hasher } from "../utils/utils.js";
-import { usersService } from "../../dao/mongo/managers/index.js";
+import { cartService, usersService } from "../../dao/mongo/managers/index.js";
 import { cookieExtractor } from "../utils/utils.js";
 import config from "../config.js";
 
@@ -15,23 +15,32 @@ const initializePassportStrategies = () => {
 
     // Estrategia de Registro: Register
     passport.use("register", new LocalStrategy({ passReqToCallback: true, usernameField: "email" }, async (req, email, password, done) => {
+        
         try {
+            
+            
             const { first_name, last_name } = req.body;
 
             if (!first_name || !last_name || !email || !password) return done(null, false, { status: "Error", error: "Debe completar todos los campos" });
-            let user = await usersService.getUserBy(email);
+            let user = await usersService.getBy({email});
 
             if (user) return done(null, false, { message: "El email ya se encuentra registrado" });
             const hashedPassword = await hasher.createHash(password);
+            
+            const cart = await cartService.create();
 
             user = {
                 first_name,
                 last_name,
                 email,
+                cart:cart._id,
                 password: hashedPassword
             }
 
-            const result = usersService.createUser(user);
+            
+            console.log('passport.config linea 43 dice:', user)
+
+            const result = usersService.create(user);
 
             return done(null, result, { message: "Usuario creado correctamente." });
 
@@ -83,11 +92,10 @@ const initializePassportStrategies = () => {
 
     //Estrategia de Token: JWT
     passport.use("jwt", new JWTStrategy({
-        jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
+        jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]), // dan usuario
         secretOrKey: "jwtS3cret"
     }, async (payload, done) => {
         try {
-            console.log(payload);
             return done(null, payload);
         } catch (error) {
             return done(error);

@@ -13,9 +13,9 @@ export default class BaseRouter {
 
 
     get(path, policies, ...callbacks) {
-        this.router.get(
-            path,
-            this.generateCustomResponses,
+        this.router.get(                                    //verbo
+            path,                                           //ruta
+            this.generateCustomResponses,                   //Response, la capacidad de responder de manera predeerminada                 
             passportCall("jwt", { strategyType: "jwt" }),
             this.handlePolicies(policies),
             this.applyCallbacks(callbacks)
@@ -40,7 +40,7 @@ export default class BaseRouter {
         res.sendSuccessWithPayload = payload => res.send({ status: "success", payload });
         res.sendInternalError = error => res.status(500).send({ status: "error", error:error.toString() });
         res.sendIncompletesValues = error => res.status(400).send({ status: "error", message: "The fields are all required", error:error});
-        res.sendNotFound = error => res.status(400).send({ status: "error", message: "No Results - Please verify the entered data."
+        res.sendNotFound = (error, message) => res.status(400).send({ status: "error", message: message||"No Results - Please verify the entered data."
 
 
 

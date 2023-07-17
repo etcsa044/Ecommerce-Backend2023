@@ -2,10 +2,12 @@ import passport from "passport";
 
 
 export const passportCall = (strategy, options = {}) => {
-    
+
     return async (req, res, next) => {
 
-        passport.authenticate(strategy, (error, user, info) => {
+        passport.authenticate(
+            strategy,
+            (error, user, info) => {
             
             if (error) return next(error);
             if (!options.strategyType) {

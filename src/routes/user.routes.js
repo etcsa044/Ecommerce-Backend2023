@@ -4,6 +4,8 @@ import passport from "passport";
 import { JwtService } from "../utils/utils.js";
 
 
+//ELIMINAR!!!!
+
 const router = Router();
 const userManager = new UserManager();
 const jwt = new JwtService();

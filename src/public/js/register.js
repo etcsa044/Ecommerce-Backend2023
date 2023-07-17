@@ -18,8 +18,6 @@ register_frm.addEventListener("submit", async evt => {
 
     const responseData = await response.json();
 
-    console.log("here", responseData)
-
     if (responseData.status === "success"){
         alert("Registro Exitoso"); //Cambiar por Swalfire!
         window.location.replace("login");

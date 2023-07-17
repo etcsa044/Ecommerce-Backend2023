@@ -27,7 +27,7 @@ export default class ProductRouter extends BaseRouter {
 
         this.post(
             "/",
-            ["ADMIN"],
+            ["PRIVATE"],
             productController.createProduct
         )
 

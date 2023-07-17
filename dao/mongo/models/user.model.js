@@ -22,13 +22,21 @@ const schema = new mongoose.Schema({
         required: true,
     },
     cart:{
-        type:String
+        type:mongoose.SchemaTypes.ObjectId,
+        ref: "carts"
     },
     role:{
        type:String,
        default:"user" 
     }
 },{timestamps:{createdAt:`created_at`, updatedAt:`updated_at`}})
+
+schema.pre('find',function(){
+    this.populate("cart");
+})
+schema.pre('findOne',function(){
+    this.populate("cart");
+})
 
 const userModel = mongoose.model(collection, schema);
 
