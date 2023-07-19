@@ -14,7 +14,7 @@ export default class BaseRouter {
 
     get(path, policies, ...callbacks) {
         this.router.get(                                    //verbo
-            path,                                           //ruta
+            path,                                          //ruta
             this.generateCustomResponses,                   //Response, la capacidad de responder de manera predeerminada                 
             passportCall("jwt", { strategyType: "jwt" }),
             this.handlePolicies(policies),
@@ -40,12 +40,7 @@ export default class BaseRouter {
         res.sendSuccessWithPayload = payload => res.send({ status: "success", payload });
         res.sendInternalError = error => res.status(500).send({ status: "error", error:error.toString() });
         res.sendIncompletesValues = error => res.status(400).send({ status: "error", message: "The fields are all required", error:error});
-        res.sendNotFound = (error, message) => res.status(400).send({ status: "error", message: message||"No Results - Please verify the entered data."
-
-
-
-
-        , error:error});
+        res.sendNotFound = (error, message) => res.status(400).send({ status: "error", message: message||"No Results - Please verify the entered data.", error:error});
         res.sendUnauthorized = error => res.status(400).send({ status: "error", error });
         next();
     }
@@ -55,11 +50,11 @@ export default class BaseRouter {
     handlePolicies = policies => {
         return (req, res, next) => {
             if (policies[0] === "PUBLIC") return next();
-            const user = req.user;
+            let user = req.user;
             if (policies[0] === "NO_AUTH" && user) return res.status(401).send({ status: "error", error: "Unauthorized" });
             if (policies[0] === "NO_AUTH" && !user) return next();
             if (!user) return res.status(401).send({ status: "error", error: req.error });
-            if (!policies.includes(user.role.toUppercase())) return res.status(403).send({ status: "error", error: "Forbidden" });
+            if (!policies.includes(user.user.role.toUpperCase())) return res.status(403).send({ status: "error", error: "Forbidden" });
             next();
         }
     };

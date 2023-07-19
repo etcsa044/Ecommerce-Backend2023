@@ -4,13 +4,6 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
 
-/** MOVER A .ENV**/
-
-// String de Conexión a la DB:
-export const connection = "mongodb+srv://etcsa044:uCdeI4OXFqA9lN9Z@backendcluster.h3wtkp9.mongodb.net/ecommerce?retryWrites=true&w=majority"
-/** */
-
-
 //Cookie Parser:
 export const cookieExtractor = (req) => {
     let token = null;

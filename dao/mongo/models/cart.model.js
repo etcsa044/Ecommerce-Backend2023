@@ -34,6 +34,9 @@ schema.pre('find',function(){
 schema.pre('findOne',function(){
     this.populate("products.product");
 })
+schema.pre('findById',function(){
+    this.populate("products.product");
+})
 
 
 

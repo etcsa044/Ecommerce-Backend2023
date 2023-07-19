@@ -9,7 +9,6 @@ export default class ViewsRouter extends BaseRouter {
             ["PUBLIC"],
             (req, res) => {
                 let user = req.user
-                console.log(user);
                 res.render("index", user);
             }
         )

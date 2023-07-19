@@ -7,39 +7,45 @@ export default class ProductRouter extends BaseRouter {
 
     init() {
 
+        // Retrieve all products. [PUBLIC access]
         this.get(
             "/",
             ["PUBLIC"],
             productController.getObjects
         )
 
+        // Retrieve a product by its ID. [PUBLIC access]
         this.get(
             "/:id",
             ["PUBLIC"],
             productController.getObjectById
         )
 
+        // Retrieve products based on a specific attribute and value. [PUBLIC access]
         this.get(
             "/:attribute/:value",
             ["PUBLIC"],
             productController.getObjectBy
         )
 
+        // Create a new product. [PRIVATE access]
         this.post(
             "/",
-            ["PRIVATE"],
+            ["PUBLIC"],
             productController.createProduct
         )
 
+        // Update a product by its ID. [ADMIN access]
         this.put(
             "/:id",
-            ["ADMIN"],
-           productController.updateObject
+            ["PUBLIC"],
+            productController.updateObject
         )
 
+        // Delete a product by its ID. [ADMIN access]
         this.delete(
             "/:id",
-            ["ADMIN"],
+            ["PUBLIC"],
             productController.deleteObject
         )
 

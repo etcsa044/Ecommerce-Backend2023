@@ -1,28 +1,36 @@
-import { usersService } from "../../dao/mongo/managers/index.js";
-import { passportCall } from "../services/passportcall.service.js";
+import { JwtService } from "../utils/utils.js";
 import BaseController from "./Controller.js";
+import { userServices } from "../services/indexServices.js";
 
-const manager = usersService;
+
+
+const userService = userServices;
+const jwtService = new JwtService()
 
 
 export default class UserController extends BaseController {
 
     constructor() {
-        super(manager);
+        super(userService);
     }
 
     createUser = async (req, res) => {
+        res.sendSuccess();
+    }
 
-        
-        passportCall(
-            "register",
+    userLogin = (req, res) => {
+        const token = jwtService.generateToken(req.user);
+        res.cookie("authToken",
+            token,
             {
-                strategyType: "locals"
+                maxAge: 1000 * 3600,
+                httpOnly: true,
             }
-        ),
-            (req, res) => {
-                res.sendSuccess();
-            }
+        ).sendSuccess("Login succesfully");
+    }
+
+    userLogout = (req, res) => {
+        return res.clearCookie("authToken").sendSuccess("Logout Succesfully")
     }
 
 }

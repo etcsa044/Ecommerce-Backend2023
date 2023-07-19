@@ -1,20 +1,19 @@
 import BaseController from "./Controller.js";
-import { productService } from "../../dao/mongo/managers/index.js";
+import { productServices } from "../services/indexServices.js";
 
-const manager = productService;
-
-
+const productService = productServices;
 
 export default class ProductController extends BaseController {
 
     constructor() {
-        super(manager)
+        super(productService)
     }
 
+    
     //create
     createProduct = async (req, res) => {
 
-        const products = await this.manager.get()
+        const products = await this.service.getAllObjects()
 
         const {
             title,
@@ -45,7 +44,7 @@ export default class ProductController extends BaseController {
         }
 
         try {
-            this.manager.create(productToAdd);
+            this.service.createObject(productToAdd);
             res.sendSuccess();
         } catch (error) {
             res.sendInternalError(error)

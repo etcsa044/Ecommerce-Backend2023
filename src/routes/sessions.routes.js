@@ -1,10 +1,8 @@
-import { JwtService } from "../utils/utils.js";
+
 import { passportCall } from "../services/passportcall.service.js";
 import BaseRouter from "./Router.js";
 import UserController from "../controllers/user.controller.js";
 
-
-const jwtService = new JwtService()
 const userController = new UserController()
 
 export default class SessionRouter extends BaseRouter {
@@ -39,30 +37,21 @@ export default class SessionRouter extends BaseRouter {
                     strategyType: "locals"
                 }
             ),
-            (req, res) => {
-                res.sendSuccess();
-            }
+            userController.createUser
         );
 
         this.post(
             "/login",
-            ["NO_AUTH"],
+            ["PUBLIC"],
             passportCall(
                 "login",
                 {
                     strategyType: "locals"
                 }
             ),
-            (req, res) => {
-                const token = jwtService.generateToken(req.user);
-                res.cookie("authToken",
-                    token,
-                    {
-                        maxAge: 1000 * 3600,
-                        httpOnly: true,
-                    }
-                ).sendSuccess("Logueado");
-            });
+            userController.userLogin
+        )
+
 
         this.get(
             "/jwt",
@@ -75,13 +64,15 @@ export default class SessionRouter extends BaseRouter {
             ),
             (req, res) => {
                 res.sendSuccessWithPayload(req.user);
-            })
-
-        this.get(
-            "/clear",
-            (req, res) => {
-                return res.clearCookie("authToken").sendSuccess("a la happy la cookie!")
             }
         )
+
+        this.post(
+            "/logout",
+            ["USER"],
+            userController.userLogout
+        )
+
+
     }
 }

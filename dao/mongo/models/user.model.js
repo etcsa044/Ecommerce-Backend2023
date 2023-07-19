@@ -38,6 +38,10 @@ schema.pre('findOne',function(){
     this.populate("cart");
 })
 
+schema.pre('findById',function(){
+    this.populate("cart");
+})
+
 const userModel = mongoose.model(collection, schema);
 
 export default userModel;
